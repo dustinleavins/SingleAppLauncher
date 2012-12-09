@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleAppLauncher", "SingleAppLauncher.csproj", "{1221E4C6-AA1E-4E7F-B2A6-60B17E40FDD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5E415FE0-46B6-4485-9A6D-D673C8722A29}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1221E4C6-AA1E-4E7F-B2A6-60B17E40FDD5}.Debug|x86.ActiveCfg = Debug|x86
+		{1221E4C6-AA1E-4E7F-B2A6-60B17E40FDD5}.Debug|x86.Build.0 = Debug|x86
+		{1221E4C6-AA1E-4E7F-B2A6-60B17E40FDD5}.Release|x86.ActiveCfg = Release|x86
+		{1221E4C6-AA1E-4E7F-B2A6-60B17E40FDD5}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
