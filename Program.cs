@@ -19,6 +19,9 @@ namespace SingleAppLauncher
             bool showHelp = false;
             int waitTime = int.Parse(ConfigurationManager.AppSettings["WaitTime"]);
 
+            RunAsAdmin runAsAdmin = (RunAsAdmin)Enum.Parse(typeof(RunAsAdmin),
+                ConfigurationManager.AppSettings["RunAsAdmin"]);
+
             OptionSet options = new OptionSet()
             {
                 {
@@ -40,6 +43,13 @@ namespace SingleAppLauncher
                     "w|wait=", (int v) =>
                     {
                         waitTime = v;
+                    }
+                },
+                {
+                    "r|runAsAdmin=", (string v) =>
+                    {
+                        runAsAdmin = (RunAsAdmin)Enum.Parse(typeof(RunAsAdmin),
+                            v);
                     }
                 },
                 {
@@ -93,10 +103,40 @@ namespace SingleAppLauncher
                 Thread.Sleep(waitTime);
             }
 
-            return LaunchApp(latestVersion, partialExePath, argsForLaunchProgram);
+            bool adminMode = false;
+
+            if (RunningXP())
+            {
+                // XP does not have UAC, so LaunchApp() 'launch as admin'
+                // functionality is not needed.
+                adminMode = false;
+            }
+            else if (runAsAdmin == RunAsAdmin.Yes)
+            {
+                adminMode = true;
+            }
+            else if (runAsAdmin == RunAsAdmin.Ask)
+            {
+                DialogResult result = MessageBox.Show(
+                    AppResources.AdminPrompt,
+                    AppResources.MessageBoxCaption,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    adminMode = true;
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return 1; // do not launch program
+                }
+            }
+
+            return LaunchApp(latestVersion, partialExePath, argsForLaunchProgram, adminMode);
         }
 
-        static int LaunchApp(Version latestVersion, string partialExePath, string args)
+        static int LaunchApp(Version latestVersion, string partialExePath, string args, bool runAsAdmin)
         {
             int statusCode = 0;
             string completeExePath = Path.Combine(Environment.CurrentDirectory,
@@ -109,6 +149,12 @@ namespace SingleAppLauncher
                                                 latestVersion.ToString()),
                 Arguments = args
             };
+
+            if (runAsAdmin)
+            {
+                info.Verb = "runas";
+                info.UseShellExecute = true;
+            }
 
             try
             {
@@ -136,6 +182,12 @@ namespace SingleAppLauncher
         static void ShowErrorMessageBox(string message)
         {
             MessageBox.Show(message, AppResources.MessageBoxCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        static bool RunningXP()
+        {
+            Version osVersion = System.Environment.OSVersion.Version;
+            return osVersion.Major == 5;
         }
     }
 }

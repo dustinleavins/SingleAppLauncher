@@ -138,4 +138,11 @@ Path and args can be specified in a shortcut or in this program's config file.</
   <data name="EmptyPathError" xml:space="preserve">
     <value>Path cannot be empty.</value>
   </data>
+  <data name="AdminPrompt" xml:space="preserve">
+    <value>This program may work better if you run it as an Administrator.
+Would you like to do so?
+YES: Run the program as an administrator
+NO: Run the program, but do not run it as an administrator
+CANCEL: Do not run this program</value>
+  </data>
 </root>

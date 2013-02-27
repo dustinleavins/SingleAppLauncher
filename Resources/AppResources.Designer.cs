@@ -61,6 +61,19 @@ namespace SingleAppLauncher.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This program may work better if you run it as an Administrator.
+        ///Would you like to do so?
+        ///YES: Run the program as an administrator
+        ///NO: Run the program, but do not run it as an administrator
+        ///CANCEL: Do not run this program.
+        /// </summary>
+        internal static string AdminPrompt {
+            get {
+                return ResourceManager.GetString("AdminPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path cannot be empty..
         /// </summary>
         internal static string EmptyPathError {
